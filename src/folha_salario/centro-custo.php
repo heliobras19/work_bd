@@ -1,3 +1,17 @@
+<?php
+
+include_once "./bd.php";
+
+$result = $mysqli->query(
+  'SELECT * FROM centro_custo;'
+);
+
+$data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -121,7 +135,7 @@
               <span class="hide-menu">Consultas</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./consultas.php" aria-expanded="false">
+              <a class="sidebar-link" href="./index.php" aria-expanded="false">
                 <span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-google-big-query" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -199,7 +213,6 @@
                     <div class="d-flex align-items-stretch">
                       <div class="card w-100">
                         <div class="card-body p-4">
-                          <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
                           <div class="table-responsive">
                             <table class="table text-nowrap mb-0 align-middle">
                               <thead class="text-dark fs-4">
@@ -208,42 +221,23 @@
                                     <h6 class="fw-semibold mb-0">Id</h6>
                                   </th>
                                   <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Assigned</h6>
+                                    <h6 class="fw-semibold mb-0">Nome</h6>
                                   </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Name</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Priority</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Budget</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
+                                  <th class="border-bottom-0 text-center">
                                     <h6 class="fw-semibold mb-0">Ações</h6>
                                   </th>
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
+                                <?php
+                                foreach ($data as $item) {
+                                  echo '   <tr>
                                   <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">1</h6>
+                                    <h6 class="fw-semibold mb-0">' . $item['cod_centro'] . '</h6>
                                   </td>
                                   <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                                    <span class="fw-normal">Web Designer</span>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <p class="mb-0 fw-normal">Elite Admin</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex align-items-center gap-2">
-                                      <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                                    </div>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
-                                  </td>
+                                    <h6 class="fw-semibold mb-1">' . $item['nome'] . '</h6> 
+                                  </td> 
                                   <td class="border-bottom-0">
                                     <div class="d-flex justify-content-evenly align-items-center">
                                       <a class="mb-0 fw-normal btn btn-info">
@@ -266,131 +260,9 @@
                                       </a>
                                     </div>
                                   </td>
-                                </tr>
-                                <tr>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">2</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                                    <span class="fw-normal">Project Manager</span>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <p class="mb-0 fw-normal">Real Homes WP Theme</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex align-items-center gap-2">
-                                      <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                                    </div>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex justify-content-evenly align-items-center">
-                                      <a class="mb-0 fw-normal btn btn-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
-                                          </path>
-                                          <path d="M16 5l3 3"></path>
-                                        </svg>
-                                      </a>
-                                      <a class="mb-0 fw-normal btn btn-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
-                                          </path>
-                                          <path d="M18 13.3l-6.3 -6.3"></path>
-                                        </svg>
-
-                                      </a>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">3</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                                    <span class="fw-normal">Project Manager</span>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <p class="mb-0 fw-normal">MedicalPro WP Theme</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex align-items-center gap-2">
-                                      <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                                    </div>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex justify-content-evenly align-items-center">
-                                      <a class="mb-0 fw-normal btn btn-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
-                                          </path>
-                                          <path d="M16 5l3 3"></path>
-                                        </svg>
-                                      </a>
-                                      <a class="mb-0 fw-normal btn btn-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
-                                          </path>
-                                          <path d="M18 13.3l-6.3 -6.3"></path>
-                                        </svg>
-                                      </a>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">4</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                                    <span class="fw-normal">Frontend Engineer</span>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <p class="mb-0 fw-normal">Hosting Press HTML</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex align-items-center gap-2">
-                                      <span class="badge bg-success rounded-3 fw-semibold">Critical</span>
-                                    </div>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex justify-content-evenly align-items-center">
-                                      <a class="mb-0 fw-normal btn btn-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
-                                          </path>
-                                          <path d="M16 5l3 3"></path>
-                                        </svg>
-                                      </a>
-                                      <a class="mb-0 fw-normal btn btn-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
-                                          </path>
-                                          <path d="M18 13.3l-6.3 -6.3"></path>
-                                        </svg>
-                                      </a>
-                                    </div>
-                                  </td>
-                                </tr>
+                                </tr>';
+                                }
+                                ?>
                               </tbody>
                             </table>
                           </div>
