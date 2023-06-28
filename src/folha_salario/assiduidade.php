@@ -15,7 +15,6 @@ if (isset($_POST['cadastrar'])) {
   $data = $_POST['data_presenca'];
   $hora_entrada = $_POST['entrada'];
   $hora_saida = $_POST['saida'];
-    echo "codigo: $cod_obreiro";
   $sql = "INSERT INTO assiduidade (cod_obreiro, data_presenca, entrada, saida) VALUES ('$cod_obreiro', '$data', '$hora_entrada', '$hora_saida')";
 
   if ($mysqli->query($sql) === TRUE) {
@@ -26,6 +25,19 @@ if (isset($_POST['cadastrar'])) {
   }
 }
 
+//eliminar assiduidade
+if (isset($_GET['eliminar'])) {
+  $cod_assiduidade = $_GET['id'];
+
+  $sql = "DELETE FROM assiduidade WHERE cod_assiduidade = '$cod_assiduidade'";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Assiduidade eliminada com sucesso!');</script>";
+    echo "<script>window.location.href = 'assiduidade.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
 ?>
 
 <!doctype html>
@@ -200,7 +212,7 @@ if (isset($_POST['cadastrar'])) {
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="true">Listagem</button>
                 <button class="nav-link " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false">Novo</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Edição</button>
+                
               </div>
             </nav>
               <?php
@@ -224,11 +236,11 @@ if (isset($_POST['cadastrar'])) {
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Entrada:</label>
-                            <input name="entrada" type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="entrada" type="datetime-local" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Saída:</label>
-                            <input name="saida" type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="saida" type="datetime-local" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Obreiro</label>
@@ -306,7 +318,7 @@ if (isset($_POST['cadastrar'])) {
                                     </td>
                                     <td class="border-bottom-0">
                                       <div class="d-flex justify-content-evenly align-items-center">
-                                        <a class="mb-0 fw-normal btn btn-info">
+                                        <a href="assiduidadeAE.php?editar=true&id='.$item['cod_assiduidade'].'" class="mb-0 fw-normal btn btn-info">
                                           <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
@@ -315,7 +327,7 @@ if (isset($_POST['cadastrar'])) {
                                             <path d="M16 5l3 3"></path>
                                           </svg>
                                         </a>
-                                        <a class="mb-0 fw-normal btn btn-danger">
+                                        <a href="?eliminar=true&id='.$item['cod_assiduidade'].'" class="mb-0 fw-normal btn btn-danger">
                                           <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
@@ -334,39 +346,6 @@ if (isset($_POST['cadastrar'])) {
                             </table>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Editar Dados da Presença</h5>
-                    <div class="card">
-                      <div class="card-body">
-                        <form>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Data:</label>
-                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Horário de Entrada:</label>
-                            <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Horário de Saída:</label>
-                            <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Obreiro</label>
-                            <select placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
-                              <option>--Selecione o Obreiro--</option>
-                              <option value="1">Informática</option>
-                            </select>
-                          </div>
-                          <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
-                        </form>
                       </div>
                     </div>
                   </div>
