@@ -2,19 +2,18 @@
 
 include_once "./bd.php";
 
+$result = $mysqli->query(
+  'select * from centro_custo;'
+);
+
+$data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 $consulta2 = [];
 
-if (isset($_GET['year'])) {
-  $result = $mysqli->query(
-    "call folha_salario.obterFeriados('" . $_GET['year'] . "-01-01', '" . $_GET['year'] . "-12-31')"
-  );
+$consulta2 = $mysqli->query("SELECT * FROM folha_salario.consulta8 " . (isset($_GET['cod_centro']) && !empty($_GET['cod_centro']) ? " where cod_centro = " . $_GET['cod_centro'] : '')  . " ; ");
 
-  $consulta2 = $mysqli->query(
-    "select * from calendario;"
-  );
+$consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
 
-  $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
-}
 ?>
 
 
@@ -188,20 +187,30 @@ if (isset($_GET['year'])) {
           <div class="align-items-strech">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link " href="index.php">Consulta 5</a>
-                <a class="nav-link active">Consulta 5</a>
+                <a class="nav-link " href="index.php">Consulta 8</a>
+                <a class="nav-link active">Consulta 8</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-consulta2" role="tabpanel" aria-labelledby="nav-consulta2-tab" tabindex="0">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Consulta 5</h5>
+                    <h5 class="card-title fw-semibold mb-4">Consulta 8</h5>
                     <form method="GET" action="">
                       <div class="row">
                         <div class="mb-3 col">
-                          <label for="dt_nasc" class="form-label">Ano:</label>
-                          <input value="<?php echo @$_GET['year']; ?>" name="year" type="number" maxlength="4" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
+                          <label for="dt_nasc" class="form-label">Centros:</label>
+                          <select name="cod_centro" class="form-control">
+                            <option value=""></option>
+                            <?php
+                            foreach ($data as $item) {
+                              echo ' 
+                                  <option value="' . $item['cod_centro'] . '">' . $item['nome'] . '</option>
+                                ';
+                            }
+                            ?>
+
+                          </select>
                         </div>
                         <div class="mb-3 col">
                           <label for="dt_nasc" class="form-label">.</label>
@@ -217,13 +226,16 @@ if (isset($_GET['year'])) {
                               <thead class="text-dark fs-4">
                                 <tr>
                                   <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Ano</h6>
+                                    <h6 class="fw-semibold mb-0">Id Centro</h6>
                                   </th>
                                   <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Data</h6>
+                                    <h6 class="fw-semibold mb-0">Centro de Custo</h6>
                                   </th>
                                   <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Indicador</h6>
+                                    <h6 class="fw-semibold mb-0">Area</h6>
+                                  </th>
+                                  <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Somatório</h6>
                                   </th>
                                 </tr>
                               </thead>
@@ -233,13 +245,16 @@ if (isset($_GET['year'])) {
                                   echo ' 
                                     <tr>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">' . @$_GET['year'] . '</h6>
+                                        <h6 class="fw-semibold mb-0">' . $item['cod_centro'] . '</h6>
                                       </td>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-1">' . $item['dt'] . '</h6> 
+                                        <h6 class="fw-semibold mb-1">' . $item['centro_custo'] . '</h6> 
                                       </td>
                                       <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal">' . $item['indicador'] . '</p>
+                                        <p class="mb-0 fw-normal">' . $item['area'] . '</p>
+                                      </td>
+                                      <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal">' . $item['somatorio'] . '</p>
                                       </td>
                                     </tr>
                                   ';

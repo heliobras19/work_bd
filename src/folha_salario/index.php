@@ -187,6 +187,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <a class="nav-link" href="consulta4.php">Consulta 4</a>
                 <a class="nav-link" href="consulta5.php">Consulta 5</a>
                 <a class="nav-link" href="consulta6.php">Consulta 6</a>
+                <a class="nav-link" href="consulta8.php">Consulta 8</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
