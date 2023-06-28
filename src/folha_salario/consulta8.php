@@ -187,8 +187,14 @@ $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
           <div class="align-items-strech">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link " href="index.php">Consulta 8</a>
-                <a class="nav-link active">Consulta 8</a>
+                <a class="nav-link" href="index.php">Consulta 1</a>
+                <a class="nav-link " href="consulta2.php">Consulta 2</a>
+                <a class="nav-link " href="consulta3.php">Consulta 3</a>
+                <a class="nav-link " href="consulta4.php">Consulta 4</a>
+                <a class="nav-link " href="consulta5.php">Consulta 5</a>
+                <a class="nav-link " href="consulta6.php">Consulta 6</a>
+                <a class="nav-link " href="consulta7.php">Consulta 7</a>
+                <a class="nav-link active" href="consulta8.php">Consulta 8</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
