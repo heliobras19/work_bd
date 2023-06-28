@@ -184,7 +184,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <a class="nav-link active" href="index.php">Consulta 1</a>
                 <a class="nav-link" href="consulta2.php">Consulta 2</a>
                 <a class="nav-link" href="consulta3.php">Consulta 3</a>
-                <button class="nav-link " id="nav-consulta4-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta4" type="button" role="tab" aria-controls="nav-consulta4" aria-selected="false">Consulta 4</button>
+                <a class="nav-link" href="consulta4.php">Consulta 4</a>
                 <button class="nav-link" id="nav-consulta5-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta5" type="button" role="tab" aria-controls="nav-consulta5" aria-selected="false">Consulta 5</button>
                 <button class="nav-link " id="nav-consulta6-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta6" type="button" role="tab" aria-controls="nav-consulta6" aria-selected="false">Consulta 6</button>
                 <button class="nav-link" id="nav-consulta7-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta7" type="button" role="tab" aria-controls="nav-consulta7" aria-selected="false">Consulta 7</button>
