@@ -14,10 +14,43 @@ $result = $mysqli->query(
               obreiro.cod_area = area.cod_area;'
 );
 
+
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 //cod_obreiro, nome, apelidos, data_nasc, cod_area, cod_turno, horario, custo, area
 
+//cadastrar obreiro
+if (isset($_POST['cadastrar'])) {
+  $nome = $_POST['nome'];
+  $apelidos = $_POST['apelidos'];
+  $data_nasc = $_POST['data_nasc'];
+  $cod_area = $_POST['cod_area'];
+  $cod_turno = $_POST['cod_turno'];
+
+  $sql = "INSERT INTO obreiro (nome, apelidos, data_nasc, cod_area, cod_turno) VALUES ('$nome', '$apelidos', '$data_nasc', '$cod_area', '$cod_turno')";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Obreiro cadastrado com sucesso!');</script>";
+    echo "<script>window.location = 'obreiro.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
+
+
+//eliminar obreiro
+if (isset($_GET['eliminar'])) {
+  $cod_obreiro = $_GET['id'];
+
+  $sql = "DELETE FROM obreiro WHERE cod_obreiro = '$cod_obreiro'";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Obreiro eliminado com sucesso!');</script>";
+    echo "<script>window.location = 'obreiro.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -201,29 +234,30 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <h5 class="card-title fw-semibold mb-4">Novo Obreiro</h5>
                     <div class="card">
                       <div class="card-body">
-                        <form>
+                        <form action="" method="post">
+                            <input type="hidden" name="cadastrar" value="true">
                           <div class="mb-3">
                             <label for="nome" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="nome" aria-describedby="nomeHelp">
+                            <input type="text" name="nome" class="form-control" id="nome" aria-describedby="nomeHelp">
                           </div>
                           <div class="mb-3">
                             <label for="apelidos" class="form-label">Apelidos:</label>
-                            <input type="text" class="form-control" id="apelidos" aria-describedby="apelidosHelp">
+                            <input type="text" name="apelidos" class="form-control" id="apelidos" aria-describedby="apelidosHelp">
                           </div>
                           <div class="mb-3">
                             <label for="dt_nasc" class="form-label">Data de Nascimento:</label>
-                            <input type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
+                            <input type="date" name="data_nasc" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                           </div>
                           <div class="mb-3">
                             <label for="area" class="form-label">Área</label>
-                            <select class="form-control" id="area">
+                            <select name="cod_area" class="form-control" id="area">
                               <option>--Selecione a Área--</option>
                               <option value="1">Informática</option>
                             </select>
                           </div>
                           <div class="mb-3">
                             <label for="turno" class="form-label">Turno:</label>
-                            <select class="form-control" id="turno">
+                            <select name="cod_turno" class="form-control" id="turno">
                               <option>--Selecione o Turno--</option>
                               <option value="1">Manhã</option>
                               <option value="2">Tarde</option>
@@ -311,7 +345,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                           <path d="M16 5l3 3"></path>
                                         </svg>
                                       </a>
-                                      <a class="mb-0 fw-normal btn btn-danger">
+                                      <a href="?eliminar=true&id='.$item['cod_obreiro'].'" class="mb-0 fw-normal btn btn-danger">
                                         <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                           <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">

@@ -5,6 +5,34 @@ $result = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  FROM area J
 
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+//cadastrar area
+if (isset($_POST['cadastrar'])) {
+  $nome = $_POST['nome'];
+  $cod_centro = $_POST['cod_centro'];
+
+  $sql = "INSERT INTO area (nome, cod_centro) VALUES ('$nome', '$cod_centro')";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Area cadastrada com sucesso!');</script>";
+    echo "<script>window.location.href = 'area.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
+
+//eliminar area
+if (isset($_GET['eliminar'])) {
+  $cod_area = $_GET['id'];
+
+  $sql = "DELETE FROM area WHERE cod_area = '$cod_area'";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Area eliminada com sucesso!');</script>";
+    echo "<script>window.location.href = 'area.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
 ?>
 
 <!doctype html>
@@ -189,14 +217,15 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <h5 class="card-title fw-semibold mb-4">Nova Área</h5>
                     <div class="card">
                       <div class="card-body">
-                        <form>
+                        <form action="" method="post">
+                            <input type="hidden" name="cadastrar">
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="nome" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Área</label>
-                            <select placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
+                            <select name="cod_centro" placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
                               <option>--Selecione o Centro de Custo--</option>
                               <option value="1">Centro 1</option>
                             </select>
@@ -259,7 +288,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                               <path d="M16 5l3 3"></path>
                                             </svg>
                                           </a>
-                                          <a class="mb-0 fw-normal btn btn-danger">
+                                          <a href="?eliminar=true&id='.$item['cod_area'].'" class="mb-0 fw-normal btn btn-danger">
                                             <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                               <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
