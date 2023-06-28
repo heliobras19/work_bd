@@ -262,6 +262,7 @@ if (isset($_GET['eliminar'])) {
                             <select name="cod_obreiro" placeholder="" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
                               <option value = "<?php echo $assItem['cod_obreiro'] ?>"><?php echo $assItem['nome'] ?></option>
                                 <?php foreach ($obreiros as $obreiro) {
+                                  if($obreiro['cod_obreiro'] != $assItem['cod_obreiro'])
                                     echo "<option value='{$obreiro['cod_obreiro']}'>{$obreiro['nome']}</option>";
                                 } ?>
                             </select>

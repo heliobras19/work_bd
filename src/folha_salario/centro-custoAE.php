@@ -1,40 +1,29 @@
 <?php
+
 include_once "./bd.php";
 $id = $_GET['id'];
-$result = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  
-FROM area JOIN centro_custo ON centro_custo.cod_centro = area.cod_centro where area.cod_area = ".$id);
+$result = $mysqli->query(
+  'SELECT * FROM centro_custo where cod_centro = '.$id
+);
 
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-$areaItem = $data[0];
-//cadastrar area
+$centroItem = $data[0];
+//cadastrar centro de custo
 if (isset($_POST['cadastrar'])) {
   $nome = $_POST['nome'];
-  $cod_centro = $_POST['cod_centro'];
-
-  $sql = "UPDATE area set nome = '$nome', cod_centro = '$cod_centro' where cod_area = '$id'";
+  $sql = "UPDATE `centro_custo` SET `nome` = '$nome' WHERE cod_centro = '$id'";
 
   if ($mysqli->query($sql) === TRUE) {
-    echo "<script>alert('Area atualizada com sucesso!');</script>";
-    echo "<script>window.location.href = 'area.php';</script>";
+      echo "<script>alert('Centro de custo atualizado com sucesso!');</script>";
+      echo "<script>window.location.href = 'centro-custo.php';</script>";
   } else {
     echo "Error: " . $sql . "<br>" . $mysqli->error;
   }
 }
 
-//eliminar area
-if (isset($_GET['eliminar'])) {
-  $cod_area = $_GET['id'];
 
-  $sql = "DELETE FROM area WHERE cod_area = '$cod_area'";
-
-  if ($mysqli->query($sql) === TRUE) {
-    echo "<script>alert('Area eliminada com sucesso!');</script>";
-    echo "<script>window.location.href = 'area.php';</script>";
-  } else {
-    echo "Error: " . $sql . "<br>" . $mysqli->error;
-  }
-}
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -206,12 +195,13 @@ if (isset($_GET['eliminar'])) {
           <div class="align-items-strech">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab"
-                 data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                  aria-selected="true">Edição</button>
-                <a href="area.php" class="nav-link "  data-bs-target="#nav-home" 
-                type="button" role="tab" aria-controls="nav-home" aria-selected="false">Listagem</a>
-              </div>
+                <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" 
+                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                 aria-selected="true">Edição</button>
+                <a href = "centro-custo.php" class="nav-link "  
+                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" 
+                aria-selected="false">Listagem</a>
+                </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
@@ -220,38 +210,16 @@ if (isset($_GET['eliminar'])) {
               <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
               <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Editar Área</h5>
+                    <h5 class="card-title fw-semibold mb-4">Editar Centro de Custo</h5>
                     <div class="card">
                       <div class="card-body">
-                        <form action="" method="post">
-                            <input type="hidden" name="cadastrar">
+                      <form action="" method="post">
+                            <input type="hidden" name="cadastrar" value="true">
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nome:</label>
-                            <input name="nome" type="text" class="form-control" id="exampleInputEmail1" 
-                            aria-describedby="emailHelp"
-                            value = "<?php echo $areaItem['nome'] ?>">
-                          </div>
-                          <?php 
-                          $result2 = $mysqli->query(
-                            'SELECT * FROM centro_custo;'
-                          );
-                          
-                          $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
-                          
-                          ?>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Centro</label>
-                            <select name="cod_centro" placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
-                              <option value = "<?php echo $areaItem['cod_centro'] ?>"><?php echo $areaItem['centro'] ?></option>
-                              <?php
-                              
-                              foreach ($data2 as $item) {
-                                
-                                if($item['cod_centro'] != $areaItem['cod_centro']){
-                              ?>
-                              <option value="<?php echo $item['cod_centro'] ?>"><?php echo $item['nome'] ?></option>
-                              <?php }}?>
-                            </select>
+                            <input type="text" class="form-control" id="exampleInputEmail1" 
+                            aria-describedby="emailHelp" name = "nome"
+                            value = "<?php echo $centroItem['nome'] ?>">
                           </div>
                           <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
                         </form>
@@ -259,6 +227,9 @@ if (isset($_GET['eliminar'])) {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                
               </div>
             </div>
           </div>

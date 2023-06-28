@@ -258,9 +258,10 @@
                                              <option value = "<?php echo $obreiroItem['cod_area'] ?>" ><?php echo $obreiroItem['area'] ?></option>
                                              <?php
                                                 foreach ($data2 as $item) {
+                                                   if($item['cod_area'] != $obreiroItem['cod_area']){
                                                 ?>
                                              <option value="<?php echo $item['cod_area'] ?>"><?php echo $item['nome'] ?></option>
-                                             <?php }?>
+                                             <?php }}?>
                                           </select>
                                        </div>
                                        <div class="mb-3">

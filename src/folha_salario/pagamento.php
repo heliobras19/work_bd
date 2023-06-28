@@ -10,6 +10,35 @@ $result = $mysqli->query(
 
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+//cadastrar pagamento
+if (isset($_POST['cadastrar'])) {
+  $cod_obreiro = $_POST['cod_obreiro'];
+  $data = $_POST['data'];
+  $quantia = $_POST['quantia'];
+  $sql = "INSERT INTO `historico_pagamento`(`data`, `quantia`, `cod_obreiro`)
+          VALUES ('$data', '$quantia', '$cod_obreiro')";
+
+  if ($mysqli->query($sql) === TRUE) {
+      echo "<script>alert('Pagamento efectuado com sucesso!');</script>";
+      echo "<script>window.location.href = 'pagamento.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
+
+//eliminar pagamento
+if (isset($_GET['eliminar'])) {
+  $cod_pagamento = $_GET['id'];
+
+  $sql = "DELETE FROM historico_pagamento WHERE cod_pagamento = '$cod_pagamento'";
+
+  if ($mysqli->query($sql) === TRUE) {
+    echo "<script>alert('Registo de pagamento eliminado com sucesso!');</script>";
+    echo "<script>window.location.href = 'pagamento.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
 ?>
 
 
@@ -185,9 +214,14 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="true">Listagem</button>
                 <button class="nav-link " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false">Novo</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Edição</button>
-              </div>
+                </div>
             </nav>
+            <?php
+              $result = $mysqli->query(
+                  'select * from obreiro'
+              );
+              $obreiros = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              ?>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                 <div class="card">
@@ -195,20 +229,25 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <h5 class="card-title fw-semibold mb-4">Novo Pagamento</h5>
                     <div class="card">
                       <div class="card-body">
-                        <form>
+                      <form action="" method="post">
+                            <input type="hidden" name="cadastrar" value="true">
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Data:</label>
-                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="date" class="form-control" id="exampleInputEmail1"
+                             aria-describedby="emailHelp" name = "data">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Quantia:</label>
-                            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="number" class="form-control" id="exampleInputEmail1" 
+                            aria-describedby="emailHelp" name = "quantia">
                           </div>
                           <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Área</label>
-                            <select placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
+                            <label for="exampleInputPassword1" class="form-label">Obreiro</label>
+                            <select name="cod_obreiro" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
                               <option>--Selecione o Obreiro--</option>
-                              <option value="1">João</option>
+                                <?php foreach ($obreiros as $obreiro) {
+                                    echo "<option value='{$obreiro['cod_obreiro']}'>{$obreiro['nome']}</option>";
+                                } ?>
                             </select>
                           </div>
                           <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
@@ -270,7 +309,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                           </td> 
                                           <td class="border-bottom-0">
                                             <div class="d-flex justify-content-evenly align-items-center">
-                                              <a class="mb-0 fw-normal btn btn-info">
+                                              <a href="pagamentoAE.php?editar=true&id='.$item['cod_pagamento'].'" class="mb-0 fw-normal btn btn-info">
                                                 <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                   <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
@@ -279,7 +318,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                                   <path d="M16 5l3 3"></path>
                                                 </svg>
                                               </a>
-                                              <a class="mb-0 fw-normal btn btn-danger">
+                                              <a href="?eliminar=true&id='.$item['cod_pagamento'].'" class="mb-0 fw-normal btn btn-danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                   <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
@@ -306,33 +345,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </div>
               </div>
               <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Editar Dados do Pagamento</h5>
-                    <div class="card">
-                      <div class="card-body">
-                        <form>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Data:</label>
-                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Quantia:</label>
-                            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Área</label>
-                            <select placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
-                              <option>--Selecione o Obreiro--</option>
-                              <option value="1">João</option>
-                            </select>
-                          </div>
-                          <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
