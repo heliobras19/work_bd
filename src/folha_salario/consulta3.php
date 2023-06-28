@@ -12,7 +12,7 @@ $consulta2 = [];
 
 if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
   $consulta2 = $mysqli->query(
-    "select * from consulta2 where data_presenca between '" . $_GET['consulta_2_start'] . "' and '" . $_GET['consulta_2_end'] . "'"
+    "select * from consulta3 where data_presenca between '" . $_GET['consulta_2_start'] . "' and '" . $_GET['consulta_2_end'] . "'"
   );
 
   $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
@@ -205,14 +205,14 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-link " href="index.php">Consulta 1</a>
-                <a class="nav-link active">Consulta 2</a>
+                <a class="nav-link active">Consulta 3</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-consulta2" role="tabpanel" aria-labelledby="nav-consulta2-tab" tabindex="0">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Consulta 2</h5>
+                    <h5 class="card-title fw-semibold mb-4">Consulta 3</h5>
                     <form method="GET" action="">
                       <div class="row">
                         <div class="mb-3 col">
@@ -237,6 +237,12 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                               <thead class="text-dark fs-4">
                                 <tr>
                                   <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Id</h6>
+                                  </th>
+                                  <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Area</h6>
+                                  </th>
+                                  <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Nome</h6>
                                   </th>
                                   <th class="border-bottom-0">
@@ -246,7 +252,7 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                                     <h6 class="fw-semibold mb-0">Data Presenca</h6>
                                   </th>
                                   <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Quantidade Minutos</h6>
+                                    <h6 class="fw-semibold mb-0">Quantidade Minutos Acumulados</h6>
                                   </th>
                                 </tr>
                               </thead>
@@ -256,14 +262,20 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                                   echo ' 
                                   <tr>
                                     <td class="border-bottom-0">
-                                      <h6 class="fw-semibold mb-0">' . $item['nome'] . '</h6>
+                                      <h6 class="fw-semibold mb-0">' . $item['cod_area'] . '</h6>
                                     </td>
                                     <td class="border-bottom-0">
-                                      <h6 class="fw-semibold mb-1">' . $item['apelidos'] . ' AOA</h6> 
+                                      <h6 class="fw-semibold mb-1">' . $item['area'] . ' AOA</h6> 
                                     </td>
+                                    <td class="border-bottom-0">
+                                      <p class="mb-0 fw-normal">' . $item['nome'] . '</p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                      <p class="mb-0 fw-normal">' . $item['apelidos'] . '</p>
+                                    </td> 
                                     <td class="border-bottom-0">
                                       <p class="mb-0 fw-normal">' . $item['data_presenca'] . '</p>
-                                    </td>
+                                    </td>  
                                     <td class="border-bottom-0">
                                       <p class="mb-0 fw-normal">' . $item['qtd_minutos'] . '</p>
                                     </td> 
