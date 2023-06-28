@@ -182,7 +182,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-consulta1-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta1" type="button" role="tab" aria-controls="nav-consulta1" aria-selected="true">Consulta 1</button>
-                <button class="nav-link " id="nav-consulta2-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta2" type="button" role="tab" aria-controls="nav-consulta2" aria-selected="false">Consulta 2</button>
+                <a class="nav-link" href="consulta2.php">Consulta 2</a>
                 <button class="nav-link" id="nav-consulta3-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta3" type="button" role="tab" aria-controls="nav-consulta3" aria-selected="false">Consulta 3</button>
                 <button class="nav-link " id="nav-consulta4-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta4" type="button" role="tab" aria-controls="nav-consulta4" aria-selected="false">Consulta 4</button>
                 <button class="nav-link" id="nav-consulta5-tab" data-bs-toggle="tab" data-bs-target="#nav-consulta5" type="button" role="tab" aria-controls="nav-consulta5" aria-selected="false">Consulta 5</button>
