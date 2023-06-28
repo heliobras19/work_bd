@@ -9,6 +9,23 @@ $result = $mysqli->query(
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 
+//cadastrar assiduidade
+if (isset($_POST['cadastrar'])) {
+  $cod_obreiro = $_POST['cod_obreiro'];
+  $data = $_POST['data_presenca'];
+  $hora_entrada = $_POST['entrada'];
+  $hora_saida = $_POST['saida'];
+    echo "codigo: $cod_obreiro";
+  $sql = "INSERT INTO assiduidade (cod_obreiro, data_presenca, entrada, saida) VALUES ('$cod_obreiro', '$data', '$hora_entrada', '$hora_saida')";
+
+  if ($mysqli->query($sql) === TRUE) {
+      echo "<script>alert('Assiduidade cadastrada com sucesso!');</script>";
+      echo "<script>window.location.href = 'assiduidade.php';</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+  }
+}
+
 ?>
 
 <!doctype html>
@@ -186,6 +203,12 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Edição</button>
               </div>
             </nav>
+              <?php
+              $result = $mysqli->query(
+                  'select * from obreiro'
+              );
+              $obreiros = mysqli_fetch_all($result, MYSQLI_ASSOC);
+              ?>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                 <div class="card">
@@ -193,24 +216,27 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <h5 class="card-title fw-semibold mb-4">Nova Presença</h5>
                     <div class="card">
                       <div class="card-body">
-                        <form>
+                        <form action="" method="post">
+                            <input type="hidden" name="cadastrar" value="true">
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Data:</label>
-                            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="data_presenca" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Entrada:</label>
-                            <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="entrada" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Saída:</label>
-                            <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="saida" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Obreiro</label>
-                            <select placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
+                            <select name="cod_obreiro" placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
                               <option>--Selecione o Obreiro--</option>
-                              <option value="1">Informática</option>
+                                <?php foreach ($obreiros as $obreiro) {
+                                    echo "<option value='{$obreiro['cod_obreiro']}'>{$obreiro['nome']}</option>";
+                                } ?>
                             </select>
                           </div>
                           <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
