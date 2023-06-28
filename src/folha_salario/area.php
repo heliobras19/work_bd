@@ -207,7 +207,6 @@ if (isset($_GET['eliminar'])) {
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="true">Listagem</button>
                 <button class="nav-link " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false">Novo</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Edição</button>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -290,7 +289,7 @@ if (isset($_GET['eliminar'])) {
                                       </td>
                                       <td class="border-bottom-0">
                                         <div class="d-flex justify-content-evenly align-items-center">
-                                          <a class="mb-0 fw-normal btn btn-info">
+                                          <a href="areaAE.php?editar=true&id='.$item['cod_area'].'" class="mb-0 fw-normal btn btn-info">
                                             <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                               <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>

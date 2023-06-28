@@ -1,57 +1,41 @@
 <?php
-
 include_once "./bd.php";
-
-$result = $mysqli->query(
-  'select obreiro.*,
-  time(  turno.horario ) as horario , 
-              turno.custo ,
-              area.nome as area
-              from 
-              obreiro JOIN 
-              turno on turno.cod_turno = 
-              obreiro.cod_turno join area on 
-              obreiro.cod_area = area.cod_area;'
-);
-
+$id = $_GET['id'];
+$result = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  
+FROM area JOIN centro_custo ON centro_custo.cod_centro = area.cod_centro where area.cod_area = ".$id);
 
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-//cod_obreiro, nome, apelidos, data_nasc, cod_area, cod_turno, horario, custo, area
-
-//cadastrar obreiro
+$areaItem = $data[0];
+//cadastrar area
 if (isset($_POST['cadastrar'])) {
   $nome = $_POST['nome'];
-  $apelidos = $_POST['apelidos'];
-  $data_nasc = $_POST['data_nasc'];
-  $cod_area = $_POST['cod_area'];
-  $cod_turno = $_POST['cod_turno'];
+  $cod_centro = $_POST['cod_centro'];
 
-  $sql = "INSERT INTO obreiro (nome, apelidos, data_nasc, cod_area, cod_turno) VALUES ('$nome', '$apelidos', '$data_nasc', '$cod_area', '$cod_turno')";
+  $sql = "UPDATE area set nome = '$nome', cod_centro = '$cod_centro' where cod_area = '$id'";
 
   if ($mysqli->query($sql) === TRUE) {
-    echo "<script>alert('Obreiro cadastrado com sucesso!');</script>";
-    echo "<script>window.location = 'obreiro.php';</script>";
+    echo "<script>alert('Area atualizada com sucesso!');</script>";
+    echo "<script>window.location.href = 'area.php';</script>";
   } else {
     echo "Error: " . $sql . "<br>" . $mysqli->error;
   }
 }
 
-
-//eliminar obreiro
+//eliminar area
 if (isset($_GET['eliminar'])) {
-  $cod_obreiro = $_GET['id'];
+  $cod_area = $_GET['id'];
 
-  $sql = "DELETE FROM obreiro WHERE cod_obreiro = '$cod_obreiro'";
+  $sql = "DELETE FROM area WHERE cod_area = '$cod_area'";
 
   if ($mysqli->query($sql) === TRUE) {
-    echo "<script>alert('Obreiro eliminado com sucesso!');</script>";
-    echo "<script>window.location = 'obreiro.php';</script>";
+    echo "<script>alert('Area eliminada com sucesso!');</script>";
+    echo "<script>window.location.href = 'area.php';</script>";
   } else {
     echo "Error: " . $sql . "<br>" . $mysqli->error;
   }
 }
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -222,57 +206,47 @@ if (isset($_GET['eliminar'])) {
           <div class="align-items-strech">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="true">Listagem</button>
-                <button class="nav-link " id="nav-new-tab" data-bs-toggle="tab" data-bs-target="#nav-new" type="button" role="tab" aria-controls="nav-new" aria-selected="false">Novo</button>
+                <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab"
+                 data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                  aria-selected="true">Edição</button>
+                <a href="area.php" class="nav-link "  data-bs-target="#nav-home" 
+                type="button" role="tab" aria-controls="nav-home" aria-selected="false">Listagem</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab" tabindex="0">
-                <div class="card">
+              <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                
+              </div>
+              <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+              <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Novo Obreiro</h5>
+                    <h5 class="card-title fw-semibold mb-4">Editar Área</h5>
                     <div class="card">
                       <div class="card-body">
                         <form action="" method="post">
-                            <input type="hidden" name="cadastrar" value="true">
+                            <input type="hidden" name="cadastrar">
                           <div class="mb-3">
-                            <label for="nome" class="form-label">Nome:</label>
-                            <input type="text" name="nome" class="form-control" id="nome" aria-describedby="nomeHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="apelidos" class="form-label">Apelidos:</label>
-                            <input type="text" name="apelidos" class="form-control" id="apelidos" aria-describedby="apelidosHelp">
-                          </div>
-                          <div class="mb-3">
-                            <label for="dt_nasc" class="form-label">Data de Nascimento:</label>
-                            <input type="date" name="data_nasc" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
+                            <label for="exampleInputEmail1" class="form-label">Nome:</label>
+                            <input name="nome" type="text" class="form-control" id="exampleInputEmail1" 
+                            aria-describedby="emailHelp"
+                            value = "<?php echo $areaItem['nome'] ?>">
                           </div>
                           <?php 
-                          $result2 = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  FROM area JOIN centro_custo ON centro_custo.cod_centro = area.cod_centro;");
-
+                          $result2 = $mysqli->query(
+                            'SELECT * FROM centro_custo;'
+                          );
+                          
                           $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
                           ?>
                           <div class="mb-3">
-                            <label for="area" class="form-label">Área</label>
-                            <select name="cod_area" class="form-control" id="area">
-                              <option>--Selecione a Área--</option>
+                            <label for="exampleInputPassword1" class="form-label">Centro</label>
+                            <select name="cod_centro" placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
+                              <option value = "<?php echo $areaItem['cod_centro'] ?>"><?php echo $areaItem['centro'] ?></option>
                               <?php
                               foreach ($data2 as $item) {
                               ?>
-                              <option value="<?php echo $item['cod_area'] ?>"><?php echo $item['nome'] ?></option>
+                              <option value="<?php echo $item['cod_centro'] ?>"><?php echo $item['nome'] ?></option>
                               <?php }?>
-                            </select>
-                          </div>
-
-                          
-                          <div class="mb-3">
-                            <label for="turno" class="form-label">Turno:</label>
-                            <select name="cod_turno" class="form-control" id="turno">
-                              <option>--Selecione o Turno--</option>
-                              
-                              <option value="1">Manhã</option>
-                              <option value="2">Tarde</option>
-                              <option value="3">Noite</option>
                             </select>
                           </div>
                           <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
@@ -282,104 +256,6 @@ if (isset($_GET['eliminar'])) {
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade show active" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab" tabindex="0">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Lista de Obreiros</h5>
-                    <div class="d-flex align-items-stretch">
-                      <div class="card w-100">
-                        <div class="card-body p-4">
-                          <div class="table-responsive">
-                            <table class="table text-nowrap mb-0 align-middle">
-                              <thead class="text-dark fs-4">
-                                <tr>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Id</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Nome</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Apelidos</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Nascimento</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Horário</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Custo</h6>
-                                  </th>
-                                  <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Area</h6>
-                                  </th>
-                                  <th class="border-bottom-0 text-center">
-                                    <h6 class="fw-semibold mb-0">Acções</h6>
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php
-                                foreach ($data as $item) {
-                                  echo '
-                                  <tr>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">' . $item['cod_obreiro'] . '</h6>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-1">' . $item['nome'] . '</h6> 
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <p class="mb-0 fw-normal">' . $item['apelidos'] . '</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                  <p class="mb-0 fw-normal">' . $item['data_nasc'] . '</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                  <p class="mb-0 fw-normal">' . $item['horario'] . '</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                  <p class="mb-0 fw-normal">' . $item['custo'] . '</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                  <p class="mb-0 fw-normal">' . $item['area'] . '</p>
-                                  </td>
-                                  <td class="border-bottom-0">
-                                    <div class="d-flex justify-content-evenly align-items-center">
-                                      <a href="obreiroAE.php?editar=true&id='.$item['cod_obreiro'].'" class="mb-0 fw-normal btn btn-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar Obreiro" class="icon icon-tabler icon-tabler-edit" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
-                                          </path>
-                                          <path d="M16 5l3 3"></path>
-                                        </svg>
-                                      </a>
-                                      <a href="?eliminar=true&id='.$item['cod_obreiro'].'" class="mb-0 fw-normal btn btn-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Excluir Obreiro" class="icon icon-tabler icon-tabler-eraser" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                          <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3">
-                                          </path>
-                                          <path d="M18 13.3l-6.3 -6.3"></path>
-                                        </svg> 
-                                      </a>
-                                    </div>
-                                  </td>
-                                </tr>
-                                  ';
-                                }
-                                ?>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
             </div>
           </div>
         </div>

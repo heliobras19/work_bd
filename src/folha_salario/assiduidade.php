@@ -224,11 +224,11 @@ if (isset($_POST['cadastrar'])) {
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Entrada:</label>
-                            <input name="entrada" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="entrada" type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Horário de Saída:</label>
-                            <input name="saida" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input name="saida" type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Obreiro</label>
