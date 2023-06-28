@@ -248,17 +248,29 @@ if (isset($_GET['eliminar'])) {
                             <label for="dt_nasc" class="form-label">Data de Nascimento:</label>
                             <input type="date" name="data_nasc" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                           </div>
+                          <?php 
+                          $result2 = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  FROM area JOIN centro_custo ON centro_custo.cod_centro = area.cod_centro;");
+
+                          $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+                          ?>
                           <div class="mb-3">
                             <label for="area" class="form-label">Área</label>
                             <select name="cod_area" class="form-control" id="area">
                               <option>--Selecione a Área--</option>
-                              <option value="1">Informática</option>
+                              <?php
+                              foreach ($data2 as $item) {
+                              ?>
+                              <option value="<?php echo $item['cod_area'] ?>"><?php echo $item['nome'] ?></option>
+                              <?php }?>
                             </select>
                           </div>
+
+                          
                           <div class="mb-3">
                             <label for="turno" class="form-label">Turno:</label>
                             <select name="cod_turno" class="form-control" id="turno">
                               <option>--Selecione o Turno--</option>
+                              
                               <option value="1">Manhã</option>
                               <option value="2">Tarde</option>
                               <option value="3">Noite</option>

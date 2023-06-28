@@ -262,10 +262,10 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                                   echo ' 
                                   <tr>
                                     <td class="border-bottom-0">
-                                      <h6 class="fw-semibold mb-0">' . $item['nome'] . '</h6>
+                                      <p class="fw-semibold mb-0">' . $item['nome'] . '</p>
                                     </td>
                                     <td class="border-bottom-0">
-                                      <h6 class="fw-semibold mb-1">' . $item['apelidos'] . ' AOA</h6> 
+                                      <p class="fw-semibold mb-1">' . $item['apelidos'] . ' AOA</p> 
                                     </td>
                                     <td class="border-bottom-0">
                                       <p class="mb-0 fw-normal">' . $item['data_presenca'] . '</p>

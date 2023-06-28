@@ -227,10 +227,10 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                   echo ' 
                                     <tr>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">' . $item['banco'] . '</h6>
+                                        <p class="fw-semibold mb-0">' . $item['banco'] . '</p>
                                       </td>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-1">' . $item['num_conta'] . '</h6> 
+                                        <p class="fw-semibold mb-1">' . $item['num_conta'] . '</p> 
                                       </td>
                                       <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal">' . $item['nome'] . '</p>

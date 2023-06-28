@@ -239,10 +239,10 @@ if (isset($_GET['year'])) {
                                   echo ' 
                                     <tr>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">' . @$_GET['year'] . '</h6>
+                                        <p class="fw-semibold mb-0">' . @$_GET['year'] . '</p>
                                       </td>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-1">' . $item['dt'] . '</h6> 
+                                        <p class="fw-semibold mb-1">' . $item['dt'] . '</p> 
                                       </td>
                                       <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal">' . $item['indicador'] . '</p>

@@ -251,10 +251,10 @@ $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
                                   echo ' 
                                     <tr>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">' . $item['cod_centro'] . '</h6>
+                                        <p class="fw-semibold mb-0">' . $item['cod_centro'] . '</p>
                                       </td>
                                       <td class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-1">' . $item['centro_custo'] . '</h6> 
+                                        <p class="fw-semibold mb-1">' . $item['centro_custo'] . '</p> 
                                       </td>
                                       <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal">' . $item['area'] . '</p>

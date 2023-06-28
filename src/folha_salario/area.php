@@ -223,11 +223,22 @@ if (isset($_GET['eliminar'])) {
                             <label for="exampleInputEmail1" class="form-label">Nome:</label>
                             <input name="nome" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           </div>
+                          <?php 
+                          $result2 = $mysqli->query(
+                            'SELECT * FROM centro_custo;'
+                          );
+                          
+                          $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+                          ?>
                           <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Área</label>
+                            <label for="exampleInputPassword1" class="form-label">Centro</label>
                             <select name="cod_centro" placeholder="--Escolha a Área--" class="form-control" id="exampleInputPassword1" aria-placeholder="--Selecione a Área--">
                               <option>--Selecione o Centro de Custo--</option>
-                              <option value="1">Centro 1</option>
+                              <?php
+                              foreach ($data2 as $item) {
+                              ?>
+                              <option value="<?php echo $item['cod_centro'] ?>"><?php echo $item['nome'] ?></option>
+                              <?php }?>
                             </select>
                           </div>
                           <button type="submit" class="mt-5 btn btn-primary">Confirmar</button>
