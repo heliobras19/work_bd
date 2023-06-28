@@ -221,15 +221,15 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                     <h5 class="card-title fw-semibold mb-4">PESQUISAR OS OBREIROS ATRASADOS</h5>
                     <form method="GET" action="">
                       <div class="row">
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-3">
                           <label for="dt_nasc" class="form-label">Data de Início:</label>
                           <input value="<?php echo @$_GET['consulta_2_start']; ?>" name="consulta_2_start" type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-3">
                           <label for="dt_nasc" class="form-label">Data de Fim:</label>
                           <input value="<?php echo @$_GET['consulta_2_end']; ?>" name="consulta_2_end" type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
                           <label for="dt_nasc" class="form-label">.</label>
                           <input type="submit" class="form-control btn btn-primary">
                         </div>

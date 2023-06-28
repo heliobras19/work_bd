@@ -12,7 +12,8 @@ $consulta2 = [];
 
 if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
   $consulta2 = $mysqli->query(
-    "call folha_salario.obterAssiduos('" . $_GET['consulta_2_start'] . "', '" . $_GET['consulta_2_end'] . "');"
+    "call folha_salario.obterAssiduos('" . $_GET['consulta_2_start'] . "', 
+    '" . $_GET['consulta_2_end'] . "');"
   );
 
   $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
@@ -207,15 +208,31 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                     <h5 class="card-title fw-semibold mb-4">PESQUISAR O PESSOAL QUE NÃO APRESENTA FALTAS NEM ATRASOS</h5>
                     <form method="GET" action="">
                       <div class="row">
-                        <div class="mb-3 col">
+                      <?php 
+                          $result2 = $mysqli->query("SELECT area.*,centro_custo.nome AS centro  FROM area JOIN centro_custo ON centro_custo.cod_centro = area.cod_centro;");
+
+                          $data2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+                          ?>
+                      <div class="mb-3 col-3">
+                            <label for="area" class="form-label">Área</label>
+                            <select name="cod_area" class="form-control" id="area">
+                              <option>--Selecione a Área--</option>
+                              <?php
+                              foreach ($data2 as $item) {
+                              ?>
+                              <option value="<?php echo $item['cod_area'] ?>"><?php echo $item['nome'] ?></option>
+                              <?php }?>
+                            </select>
+                          </div>
+                        <div class="mb-3 col-3">
                           <label for="dt_nasc" class="form-label">Data de Início:</label>
                           <input value="<?php echo @$_GET['consulta_2_start']; ?>" name="consulta_2_start" type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-3">
                           <label for="dt_nasc" class="form-label">Data de Fim:</label>
                           <input value="<?php echo @$_GET['consulta_2_end']; ?>" name="consulta_2_end" type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
                           <label for="dt_nasc" class="form-label">.</label>
                           <input type="submit" class="form-control btn btn-primary">
                         </div>

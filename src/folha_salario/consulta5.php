@@ -205,11 +205,11 @@ if (isset($_GET['year'])) {
                     <h5 class="card-title fw-semibold mb-4">SAIBA OS DIAS DOMINGOS E FERIADOS DO ANO</h5>
                     <form method="GET" action="">
                       <div class="row">
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-4">
                           <label for="dt_nasc" class="form-label">Ano:</label>
                           <input value="<?php echo @$_GET['year']; ?>" name="year" type="number" maxlength="4" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
                           <label for="dt_nasc" class="form-label">.</label>
                           <input type="submit" class="form-control btn btn-primary">
                         </div>

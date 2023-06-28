@@ -204,10 +204,10 @@ $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
                     <h5 class="card-title fw-semibold mb-4">CONSULTA CONSOLIDADA DOS LIQUÍDOS</h5>
                     <form method="GET" action="">
                       <div class="row">
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-4">
                           <label for="dt_nasc" class="form-label">Centros:</label>
                           <select name="cod_centro" class="form-control">
-                            <option value=""></option>
+                            <option value="">Selecione o centro de custo</option>
                             <?php
                             foreach ($data as $item) {
                               echo ' 
@@ -218,7 +218,7 @@ $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
 
                           </select>
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
                           <label for="dt_nasc" class="form-label">.</label>
                           <input type="submit" class="form-control btn btn-primary">
                         </div>

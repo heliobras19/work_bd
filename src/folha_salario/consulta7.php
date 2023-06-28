@@ -209,7 +209,7 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
                           <label for="dt_nasc" class="form-label">Data de Fim:</label>
                           <input value="<?php echo @$_GET['consulta_2_end']; ?>" name="consulta_2_end" type="date" class="form-control" id="dt_nasc" aria-describedby="dt_nascHelp">
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
                           <label for="dt_nasc" class="form-label">.</label>
                           <input type="submit" class="form-control btn btn-primary">
                         </div>
