@@ -201,7 +201,7 @@ $consulta2 = mysqli_fetch_all($consulta2, MYSQLI_ASSOC);
               <div class="tab-pane fade show active" id="nav-consulta2" role="tabpanel" aria-labelledby="nav-consulta2-tab" tabindex="0">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Consulta 8</h5>
+                    <h5 class="card-title fw-semibold mb-4">CONSULTA CONSOLIDADA DOS LIQUÍDOS</h5>
                     <form method="GET" action="">
                       <div class="row">
                         <div class="mb-3 col">

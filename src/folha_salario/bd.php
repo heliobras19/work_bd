@@ -1,6 +1,6 @@
 <?php
 
-$mysqli = new mysqli("localhost", "root", "Domingos.1", "folha_salario");
+$mysqli = new mysqli("localhost", "root", "", "folha_salario");
 
 mysqli_set_charset($mysqli, "utf8");
 

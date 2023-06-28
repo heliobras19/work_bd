@@ -204,7 +204,7 @@ if (isset($_GET['consulta_2_start']) && isset($_GET['consulta_2_end'])) {
               <div class="tab-pane fade show active" id="nav-consulta2" role="tabpanel" aria-labelledby="nav-consulta2-tab" tabindex="0">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Consulta 4</h5>
+                    <h5 class="card-title fw-semibold mb-4">PESQUISAR O PESSOAL QUE NÃO APRESENTA FALTAS NEM ATRASOS</h5>
                     <form method="GET" action="">
                       <div class="row">
                         <div class="mb-3 col">

@@ -3,7 +3,7 @@
 include_once "./bd.php";
 
 $result = $mysqli->query(
-  'SELECT * FROM consulta1;'
+  'SELECT c.*, a.nome as area FROM consulta1 c, area a where a.cod_area = c.cod_area;'
 );
 
 $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -194,7 +194,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
               <div class="tab-pane fade show active" id="nav-consulta1" role="tabpanel" aria-labelledby="nav-consulta1-tab" tabindex="0">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Consulta 1</h5>
+                    <h5 class="card-title fw-semibold mb-4">ANIVERSARIANTES DA SEMANA</h5>
                     <div class="d-flex align-items-stretch">
                       <div class="card w-100">
                         <div class="card-body p-4">
@@ -224,10 +224,10 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                   echo '
                                         <tr>
                                           <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">' . $item['nome'] . '</h6>
+                                            <p class="fw-semibold mb-0">' . $item['nome'] . '</p>
                                           </td>
                                           <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-1">' . $item['apelidos'] . ' AOA</h6> 
+                                            <p class="fw-semibold mb-1">' . $item['apelidos'] . ' AOA</p> 
                                           </td>
                                           <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal">' . $item['data_nasc'] . '</p>
